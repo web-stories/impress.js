@@ -26,8 +26,8 @@ module.exports = function( grunt ) {
 					}
 				},
 				expand: true,
-				cwd: "test/",
-				src: "demo/**/*.*",
+				cwd: "gh-pages/",
+				src: "**/*.*",
 				dest: "dist/"
 			}
 		},
@@ -49,6 +49,12 @@ module.exports = function( grunt ) {
 					]
 				}
 			}
+		},
+		"gh-pages": {
+			options: {
+				base: "dist"
+			},
+			src: [ "**/*.*" ]
 		}
 	};
 
@@ -62,5 +68,5 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "validate", [ "jscs", "jshint" ] );
 
 	// Special tasks
-	grunt.registerTask( "default", [ "validate", "files" ] );
+	grunt.registerTask( "default", [ "validate", "files", "gh-pages" ] );
 };
