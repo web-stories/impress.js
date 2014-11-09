@@ -1,7 +1,7 @@
 module.exports = function( grunt ) {
 	"use strict";
 
-	grunt.initConfig({
+	var configs = {
 		pkg: grunt.file.readJSON( "bower.json" ),
 		jscs: {
 			files: [
@@ -20,7 +20,15 @@ module.exports = function( grunt ) {
 		},
 		copy: {
 			demo: {
-				src: [ "test/demo/" ]
+				options: {
+					process: function( content ) {
+						return grunt.template.process( content, configs );
+					}
+				},
+				expand: true,
+				cwd: "test/",
+				src: "demo/**/*.*",
+				dest: "dist/"
 			}
 		},
 		concat: {
@@ -42,13 +50,15 @@ module.exports = function( grunt ) {
 				}
 			}
 		}
-	});
+	};
+
+	grunt.initConfig( configs );
 
 	// Load grunt tasks from NPM packages
 	require( "load-grunt-tasks" )( grunt );
 
 	// Main tasks
-	grunt.registerTask( "files", [ "concat" ] );
+	grunt.registerTask( "files", [ "concat", "copy" ] );
 	grunt.registerTask( "validate", [ "jscs", "jshint" ] );
 
 	// Special tasks
