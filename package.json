@@ -1,0 +1,39 @@
+{
+  "name": "impress",
+  "version": "0.5.4-pre",
+  "description": "A presentation framework based on the power of CSS3 transforms and transitions.",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/web-stories/impress.js.git"
+  },
+  "keywords": [
+    "impress",
+    "presentation",
+    "slide",
+    "slides"
+  ],
+  "author": "Bartek Szopka (https://github.com/bartaz)",
+  "contributors": [
+    {
+      "name": "Fagner Brack",
+      "email": "github@fagnermartins.com",
+      "url": "https://github.com/FagnerMartinsBrack/"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/web-stories/impress.js/issues"
+  },
+  "homepage": "https://github.com/web-stories/impress.js",
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-cli": "0.1.x",
+    "grunt-contrib-concat": "0.5.x",
+    "grunt-contrib-jshint": "0.10.x",
+    "grunt-jscs": "0.8.x",
+    "load-grunt-tasks": "1.0.x"
+  }
+}
