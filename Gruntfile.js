@@ -25,7 +25,7 @@ module.exports = function( grunt ) {
 			},
 			core: {
 				files: {
-					"dist/<%= pkg.name %>-<%= pkg.version %>.js": [ "src/js/core.js" ],
+					"dist/<%= pkg.name %>-<%= pkg.version %>.js": [ "src/js/core.js" ]
 				}
 			},
 			all: {
@@ -45,4 +45,7 @@ module.exports = function( grunt ) {
 	// Main tasks
 	grunt.registerTask( "files", [ "concat" ] );
 	grunt.registerTask( "validate", [ "jscs", "jshint" ] );
+
+	// Special tasks
+	grunt.registerTask( "default", [ "validate", "files" ] );
 };
