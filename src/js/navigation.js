@@ -1,4 +1,6 @@
-// As you can see this file is separate from the impress.js core code.
+// NAVIGATION EVENTS
+
+// As you can see this part is separate from the impress.js core code.
 // It's because these navigation actions only need what impress.js provides with
 // its simple API.
 (function( document, window ) {
