@@ -7,6 +7,15 @@ module.exports = function( grunt ) {
 				"Gruntfile.js",
 				"src/**/*.js"
 			]
+		},
+		jshint: {
+			files: [
+				"Gruntfile.js",
+				"src/**/*.js"
+			],
+			options: {
+				jshintrc: true
+			}
 		}
 	});
 
@@ -14,5 +23,5 @@ module.exports = function( grunt ) {
 	require( "load-grunt-tasks" )( grunt );
 
 	// Main tasks
-	grunt.registerTask( "validate", ["jscs"] );
+	grunt.registerTask( "validate", [ "jscs", "jshint" ] );
 };

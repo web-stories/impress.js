@@ -1,6 +1,6 @@
 {
-	"preset": "jquery",
-	"requireMultipleVarDecl": null,
-	"requireSpacesInsideArrayBrackets": null,
-	"validateLineBreaks": null
+  "preset": "jquery",
+  "requireMultipleVarDecl": null,
+  "requireSpacesInsideArrayBrackets": null,
+  "validateLineBreaks": null
 }

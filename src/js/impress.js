@@ -16,9 +16,6 @@
  * source: http://github.com/bartaz/impress.js/
  */
 
-/*jshint bitwise:true, curly:true, eqeqeq:true, forin:true, latedef:true, newcap:true,
-		 noarg:true, noempty:true, undef:true, strict:true, browser:true */
-
 // You are one of those who like to know how things work inside?
 // Let me show you the cogs that make impress.js run...
 (function( document, window ) {
@@ -654,12 +651,12 @@
 		body.classList.add( "impress-disabled" );
 
 		// store and return API for given impress.js root element
-		return roots[ "impress-root-" + rootId ] = {
+		return (roots[ "impress-root-" + rootId ] = {
 			init: init,
 			goto: goto,
 			next: next,
 			prev: prev
-		};
+		});
 
 	};
 
@@ -783,8 +780,9 @@
 			var target = event.target;
 			// find closest step element that is not active
 			while (
-				!( target.classList.contains( "step" ) && !target.classList.contains( "active" ) )
-				&& ( target !== document.documentElement ) ) {
+				!( target.classList.contains( "step" ) &&
+					!target.classList.contains( "active" ) ) &&
+				( target !== document.documentElement ) ) {
 				target = target.parentNode;
 			}
 
