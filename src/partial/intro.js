@@ -15,3 +15,11 @@
  * url: http://bartaz.github.com/impress.js/
  * source: http://github.com/bartaz/impress.js/
  */
+
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+		define( factory );
+	} else {
+		factory();
+	}
+}(function() {
