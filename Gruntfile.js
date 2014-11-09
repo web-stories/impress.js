@@ -33,8 +33,8 @@ module.exports = function( grunt ) {
 		},
 		concat: {
 			options: {
-				banner: grunt.file.read( "src/banner/banner.js" ),
-				footer: grunt.file.read( "src/banner/footer.js" )
+				banner: grunt.file.read( "src/partial/intro.js" ),
+				footer: grunt.file.read( "src/partial/outro.js" )
 			},
 			core: {
 				files: {
