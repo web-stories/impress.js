@@ -53,8 +53,7 @@
 		//   Well, the [tab] key by default navigates around focusable elements, so clicking
 		//   it very often caused scrolling to focused element and breaking impress.js
 		//   positioning. I didn't want to just prevent this default action, so I used [tab]
-		//   as another way to moving to next step... And yes, I know that for the sake of
-		//   consistency I should add [shift+tab] as opposite action...
+		//   as another way to moving to next step...
 		document.addEventListener( "keyup", function( event ) {
 			if (
 				event.keyCode === 9 ||
@@ -67,7 +66,9 @@
 					case 38: // up
 							api.prev();
 							break;
-					case 9:  // tab
+					case 9: // tab
+						api[ event.shiftKey ? "prev" : "next" ]();
+						break;
 					case 32: // space
 					case 34: // pg down
 					case 39: // right
