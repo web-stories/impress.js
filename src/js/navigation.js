@@ -22,7 +22,7 @@
 	// wait for impress.js to be initialized
 	document.addEventListener( "impress:init", function( event ) {
 		// Getting API from event data.
-		// So you don"t event need to know what is the id of the root element
+		// So you don't event need to know what is the id of the root element
 		// or anything. `impress:init` event data gives you everything you
 		// need to control the presentation that was just initialized.
 		var api = event.detail.api;
@@ -52,7 +52,7 @@
 		//   step, because sometimes browser scrolls viewport because of the focused element?
 		//   Well, the [tab] key by default navigates around focusable elements, so clicking
 		//   it very often caused scrolling to focused element and breaking impress.js
-		//   positioning. I didn"t want to just prevent this default action, so I used [tab]
+		//   positioning. I didn't want to just prevent this default action, so I used [tab]
 		//   as another way to moving to next step... And yes, I know that for the sake of
 		//   consistency I should add [shift+tab] as opposite action...
 		document.addEventListener( "keyup", function( event ) {

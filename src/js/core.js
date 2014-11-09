@@ -161,7 +161,7 @@
 		( ua.search( /(iphone)|(ipod)|(android)/ ) === -1 );
 
 	if ( !impressSupported ) {
-		// we can"t be sure that `classList` is supported
+		// we can't be sure that `classList` is supported
 		body.className += " impress-not-supported ";
 	} else {
 		body.classList.remove( "impress-not-supported" );
