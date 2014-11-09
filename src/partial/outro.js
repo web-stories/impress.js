@@ -1,4 +1,5 @@
-}));
+	return impress;
+}, document, window ));
 
 // THAT'S ALL FOLKS!
 //

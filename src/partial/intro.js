@@ -16,10 +16,11 @@
  * source: http://github.com/bartaz/impress.js/
  */
 
-(function( factory ) {
+(function( factory, document, window ) {
 	if ( typeof define === "function" && define.amd ) {
 		define( factory );
 	} else {
-		factory();
+		window.impress = factory();
 	}
 }(function() {
+	"use strict";
