@@ -15,7 +15,7 @@ module.exports = function( grunt ) {
 				"src/**/*.js"
 			],
 			options: {
-				jshintrc: true
+				"node": true
 			}
 		},
 		concat: {
