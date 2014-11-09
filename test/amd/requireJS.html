@@ -5,22 +5,20 @@
     <title>AMD</title>
     <link rel="stylesheet" href="../qunit.css">
     <script src="../qunit.js"></script>
+    <script src="../utils.js"></script>
     <script src="require.js"></script>
   </head>
   <body>
     <div id="qunit"></div>
     <script>
       (function() {
-        var query = window.location.href.split( "?" ).pop();
-        var moduleName = query.split( "&" ).map(function( pair ) {
-          if ( pair.split( "=" )[ 0 ] === "version" ) {
-            return pair.split( "=" ).pop();
-          }
-        });
-        require( moduleName, function( impress ) {
+        var moduleName = "../../dist/impress.all-" + utils.query( "version" );
+        QUnit.config.autostart = false;
+        require( [ moduleName ], function( impress ) {
+          start();
           test( "Impress loading", function() {
-            ok( !!window.impress, "Impress should not be globally available" );
-            ok( !!impress, "Impress should be loaded locally" );
+            strictEqual( window.impress, undefined, "Impress should not be globally visible" );
+            ok( !!impress, "Impress should be locally visible" );
           });
         });
       }());
