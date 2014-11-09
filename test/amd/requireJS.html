@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AMD</title>
+    <link rel="stylesheet" href="../qunit.css">
+    <script src="../qunit.js"></script>
+    <script src="../utils.js"></script>
+    <script src="require.js"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <script>
+      (function() {
+        var moduleName = "../../dist/impress.all-" + utils.query( "version" );
+        QUnit.config.autostart = false;
+        require( [ moduleName ], function( impress ) {
+          start();
+          test( "Impress loading", function() {
+            strictEqual( window.impress, undefined, "Impress should not be globally visible" );
+            ok( !!impress, "Impress should be locally visible" );
+          });
+        });
+      }());
+    </script>
+  </body>
+</html>

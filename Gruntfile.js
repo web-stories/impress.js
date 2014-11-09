@@ -6,13 +6,13 @@ module.exports = function( grunt ) {
 		jscs: {
 			files: [
 				"Gruntfile.js",
-				"src/**/*.js"
+				"src/js/**/*.js"
 			]
 		},
 		jshint: {
 			files: [
 				"Gruntfile.js",
-				"src/**/*.js"
+				"src/js/**/*.js"
 			],
 			options: {
 				"node": true
@@ -55,6 +55,18 @@ module.exports = function( grunt ) {
 				base: "dist"
 			},
 			src: [ "**/*.*" ]
+		},
+		connect: {
+			all: {}
+		},
+		qunit: {
+			all: {
+				options: {
+					urls: [
+						"http://localhost:8000/test/amd/requireJS.html?version=<%= pkg.version %>"
+					]
+				}
+			}
 		}
 	};
 
@@ -64,9 +76,11 @@ module.exports = function( grunt ) {
 	require( "load-grunt-tasks" )( grunt );
 
 	// Main tasks
+	grunt.registerTask( "test", [ "connect", "qunit" ] );
 	grunt.registerTask( "files", [ "concat", "copy" ] );
 	grunt.registerTask( "validate", [ "jscs", "jshint" ] );
 
 	// Special tasks
-	grunt.registerTask( "default", [ "validate", "files", "gh-pages" ] );
+	grunt.registerTask( "default", [ "validate", "files", "test" ] );
+	grunt.registerTask( "pages", [ "default", "gh-pages" ] );
 };
