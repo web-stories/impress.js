@@ -1,2 +1,5 @@
 node_modules
 dist
+
+# Prevent staging ".grunt" folder for canceled "grunt gh-pages" task in the middle of the process
+.grunt
