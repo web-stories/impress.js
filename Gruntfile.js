@@ -2,7 +2,7 @@ module.exports = function( grunt ) {
 	"use strict";
 
 	grunt.initConfig({
-		pkg: grunt.file.readJSON( "package.json" ),
+		pkg: grunt.file.readJSON( "bower.json" ),
 		jscs: {
 			files: [
 				"Gruntfile.js",
@@ -16,6 +16,11 @@ module.exports = function( grunt ) {
 			],
 			options: {
 				"node": true
+			}
+		},
+		copy: {
+			demo: {
+				src: [ "test/demo/" ]
 			}
 		},
 		concat: {
