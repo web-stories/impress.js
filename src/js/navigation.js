@@ -34,8 +34,12 @@ document.addEventListener( "impress:init", function( event ) {
 
 	// Prevent default keydown action when one of supported key is pressed.
 	document.addEventListener( "keydown", function( event ) {
+		switch ( event.keyCode ) {
+			case keyCodes.TAB:
+				event.preventDefault();
+				break;
+		}
 		if (
-			event.keyCode === keyCodes.TAB ||
 			( event.keyCode >= 32 && event.keyCode <= 34 ) ||
 			( event.keyCode >= 37 && event.keyCode <= 40 )
 		) {
