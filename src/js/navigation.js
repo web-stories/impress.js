@@ -19,6 +19,15 @@ var throttle = function( fn, delay ) {
 
 // Enumerate all keyCodes as constants to enhance readability.
 var keyCodes = {
+	DOWN_ARROW: 40,
+	LEFT_ARROW: 37,
+	RIGHT_ARROW: 39,
+	UP_ARROW: 38,
+	
+	PAGE_DOWN: 34,
+	PAGE_UP: 33,
+	
+	SPACE: 32,
 	TAB: 9
 };
 
@@ -35,15 +44,16 @@ document.addEventListener( "impress:init", function( event ) {
 	// Prevent default keydown action when one of supported key is pressed.
 	document.addEventListener( "keydown", function( event ) {
 		switch ( event.keyCode ) {
+			case keyCodes.DOWN_ARROW:
+			case keyCodes.LEFT_ARROW:
+			case keyCodes.RIGHT_ARROW:
+			case keyCodes.UP_ARROW:
+			case keyCodes.PAGE_DOWN:
+			case keyCodes.PAGE_UP:
+			case keyCodes.SPACE:
 			case keyCodes.TAB:
 				event.preventDefault();
 				break;
-		}
-		if (
-			( event.keyCode >= 32 && event.keyCode <= 34 ) ||
-			( event.keyCode >= 37 && event.keyCode <= 40 )
-		) {
-			event.preventDefault();
 		}
 	}, false );
 
