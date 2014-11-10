@@ -68,16 +68,9 @@ var getElementById = function( id ) {
 	return document.getElementById( id );
 };
 
-// `$` returns first element for given CSS `selector` in the `context` of
-// the given element or whole document.
+// Return an array of elements for the given CSS `selector` in the `context` of the given element
+// or whole document.
 var $ = function( selector, context ) {
-	context = context || document;
-	return context.querySelector( selector );
-};
-
-// `$$` return an array of elements for given CSS `selector` in the `context` of
-// the given element or whole document.
-var $$ = function( selector, context ) {
 	context = context || document;
 	return arrayify( context.querySelectorAll( selector ) );
 };
@@ -314,7 +307,7 @@ var impress = function( rootId ) {
 
 		// First we set up the viewport for mobile devices.
 		// For some reason iPad goes nuts when it is not done properly.
-		var meta = $( "meta[name='viewport']" ) || document.createElement( "meta" );
+		var meta = $( "meta[name='viewport']" )[ 0 ] || document.createElement( "meta" );
 		meta.content = "width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no";
 		if ( meta.parentNode !== document.head ) {
 			meta.name = "viewport";
@@ -369,7 +362,7 @@ var impress = function( rootId ) {
 		body.classList.add( "impress-enabled" );
 
 		// get and init steps
-		steps = $$( ".step", root );
+		steps = $( ".step", root );
 		steps.forEach( initStep );
 
 		// set a default initial state of the canvas
