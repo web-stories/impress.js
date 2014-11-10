@@ -17,6 +17,11 @@ var throttle = function( fn, delay ) {
 	};
 };
 
+// Enumerate all keyCodes as constants to enhance readability.
+var keyCodes = {
+	TAB: 9
+};
+
 // wait for impress.js to be initialized
 document.addEventListener( "impress:init", function( event ) {
 	// Getting API from event data.
@@ -30,7 +35,7 @@ document.addEventListener( "impress:init", function( event ) {
 	// Prevent default keydown action when one of supported key is pressed.
 	document.addEventListener( "keydown", function( event ) {
 		if (
-			event.keyCode === 9 ||
+			event.keyCode === keyCodes.TAB ||
 			( event.keyCode >= 32 && event.keyCode <= 34 ) ||
 			( event.keyCode >= 37 && event.keyCode <= 40 )
 		) {
@@ -54,7 +59,7 @@ document.addEventListener( "impress:init", function( event ) {
 	//   as another way to moving to next step...
 	document.addEventListener( "keyup", function( event ) {
 		if (
-			event.keyCode === 9 ||
+			event.keyCode === keyCodes.TAB ||
 			( event.keyCode >= 32 && event.keyCode <= 34 ) ||
 			( event.keyCode >= 37 && event.keyCode <= 40 )
 		) {
@@ -64,7 +69,7 @@ document.addEventListener( "impress:init", function( event ) {
 				case 38: // up
 						api.prev();
 						break;
-				case 9: // tab
+				case keyCodes.TAB: // tab
 					api[ event.shiftKey ? "prev" : "next" ]();
 					break;
 				case 32: // space
