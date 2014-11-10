@@ -10,13 +10,21 @@ module.exports = function( grunt ) {
 			]
 		},
 		jshint: {
+			options: {
+				"node": true,
+				"browser": true,
+				"bitwise": true,
+				"forin": true,
+				"latedef": true,
+				"newcap": true,
+				"noarg": true,
+				"noempty": true,
+				"undef": true
+			},
 			files: [
 				"Gruntfile.js",
 				"src/js/**/*.js"
-			],
-			options: {
-				"node": true
-			}
+			]
 		},
 		copy: {
 			demo: {
