@@ -73,20 +73,20 @@ document.addEventListener( "impress:init", function( event ) {
 	//   as another way to moving to next step...
 	document.addEventListener( "keyup", function( event ) {
 		switch ( event.keyCode ) {
-			case 33: // pg up
-			case 37: // left
-			case 38: // up
+			case keyCodes.PAGE_UP:
+			case keyCodes.ARROW_LEFT:
+			case keyCodes.ARROW_UP:
 				api.prev();
 				event.preventDefault();
 				break;
-			case keyCodes.TAB: // tab
+			case keyCodes.TAB:
 				api[ event.shiftKey ? "prev" : "next" ]();
 				event.preventDefault();
 				break;
-			case 32: // space
-			case 34: // pg down
-			case 39: // right
-			case 40: // down
+			case keyCodes.SPACE:
+			case keyCodes.PAGE_DOWN:
+			case keyCodes.ARROW_RIGHT:
+			case keyCodes.ARROW_DOWN:
 				api.next();
 				event.preventDefault();
 				break;
