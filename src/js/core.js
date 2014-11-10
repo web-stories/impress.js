@@ -203,8 +203,7 @@ var impress = function( rootId ) {
 		return roots[ "impress-root-" + rootId ];
 	}
 
-	// Data of all presentation steps.
-	// TODO Where is this data used exactly?
+	// Internal information of each presentation step.
 	var stepsData = {};
 
 	// Element of currently active step.
@@ -271,8 +270,7 @@ var impress = function( rootId ) {
 				y: toNumber( data.rotateY ),
 				z: toNumber( data.rotateZ || data.rotate )
 			},
-			scale: toNumber( data.scale, 1 ),
-			el: element
+			scale: toNumber( data.scale, 1 )
 		};
 
 		if ( !element.id ) {
@@ -616,7 +614,7 @@ var impress = function( rootId ) {
 
 	body.classList.add( "impress-disabled" );
 
-	// store and return the API for given impress.js root element.
+	// Store and return the API for given impress.js root element.
 	return (roots[ "impress-root-" + rootId ] = {
 		init: init,
 		goto: goto,
@@ -626,5 +624,5 @@ var impress = function( rootId ) {
 
 };
 
-// flag that can be used in JS to check if browser have passed the support test
+// Flag that can be used in JS to check if browser have passed the support test.
 impress.supported = impressSupported;
