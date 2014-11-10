@@ -175,7 +175,7 @@ var defaults = {
 };
 
 // Tt's just an empty function... and a useless comment.
-var empty = function() { return false; };
+var empty = function() {};
 
 // IMPRESS.JS API
 
