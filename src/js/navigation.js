@@ -72,29 +72,24 @@ document.addEventListener( "impress:init", function( event ) {
 	//   positioning. I didn't want to just prevent this default action, so I used [tab]
 	//   as another way to moving to next step...
 	document.addEventListener( "keyup", function( event ) {
-		if (
-			event.keyCode === keyCodes.TAB ||
-			( event.keyCode >= 32 && event.keyCode <= 34 ) ||
-			( event.keyCode >= 37 && event.keyCode <= 40 )
-		) {
-			switch ( event.keyCode ) {
-				case 33: // pg up
-				case 37: // left
-				case 38: // up
-						api.prev();
-						break;
-				case keyCodes.TAB: // tab
-					api[ event.shiftKey ? "prev" : "next" ]();
-					break;
-				case 32: // space
-				case 34: // pg down
-				case 39: // right
-				case 40: // down
-						api.next();
-						break;
-			}
-
-			event.preventDefault();
+		switch ( event.keyCode ) {
+			case 33: // pg up
+			case 37: // left
+			case 38: // up
+				api.prev();
+				event.preventDefault();
+				break;
+			case keyCodes.TAB: // tab
+				api[ event.shiftKey ? "prev" : "next" ]();
+				event.preventDefault();
+				break;
+			case 32: // space
+			case 34: // pg down
+			case 39: // right
+			case 40: // down
+				api.next();
+				event.preventDefault();
+				break;
 		}
 	}, false );
 
