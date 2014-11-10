@@ -165,4 +165,4 @@ document.addEventListener( "impress:init", function( event ) {
 		api.goto( stepElement, duration );
 	}, 250 ));
 
-}, false );
+});
