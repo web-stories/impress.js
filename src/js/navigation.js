@@ -4,11 +4,9 @@
 // It's because these navigation actions only need what impress.js provides with
 // its simple API.
 
-// Throttling function calls, by Remy Sharp.
+// Debounce function calls, by Remy Sharp.
 // http://remysharp.com/2010/07/21/throttling-function-calls/
-
-// TODO Debounce, instead of throttle (see link above)
-var throttle = function( fn, delay ) {
+var debounce = function( fn, delay ) {
 	var timer = null;
 	return function() {
 		var context = this, args = arguments;
@@ -161,7 +159,7 @@ document.addEventListener( "impress:init", function( event ) {
 
 	// Rescale presentation when window is resized.
 	// Force going to active step again, to trigger rescaling.
-	window.addEventListener( "resize", throttle(function() {
+	window.addEventListener( "resize", debounce(function() {
 		var stepElement = document.querySelector( ".step.active" );
 		var duration = 500;
 		api.goto( stepElement, duration );
