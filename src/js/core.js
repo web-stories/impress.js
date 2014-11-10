@@ -571,13 +571,13 @@ var impress = function( rootId ) {
 			event.target.classList.remove( "past" );
 			event.target.classList.remove( "future" );
 			event.target.classList.add( "present" );
-		}, false );
+		});
 
 		root.addEventListener( "impress:stepleave", function( event ) {
 			event.target.classList.remove( "present" );
 			event.target.classList.add( "past" );
-		}, false );
-	}, false );
+		});
+	});
 
 	// Adding hash change support.
 	root.addEventListener( "impress:init", function() {
@@ -595,7 +595,7 @@ var impress = function( rootId ) {
 		// TODO Does it still happens? Check ticket.
 		root.addEventListener( "impress:stepenter", function( event ) {
 			window.location.hash = lastHash = "#/" + event.target.id;
-		}, false );
+		});
 
 		window.addEventListener( "hashchange", function() {
 			// When the step is entered, the hash in the location is updated
@@ -606,11 +606,11 @@ var impress = function( rootId ) {
 			if ( window.location.hash !== lastHash ) {
 				goto( getElementFromHash() );
 			}
-		}, false );
+		});
 
 		// Start the step defined in url or first step of the presentation.
 		goto( getElementFromHash() || steps[ 0 ], 0 );
-	}, false );
+	});
 
 	body.classList.add( "impress-disabled" );
 
