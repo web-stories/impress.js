@@ -123,11 +123,14 @@ document.addEventListener( "impress:init", function( event ) {
 	// Delegated handler for clicking on step elements.
 	document.addEventListener( "click", function( event ) {
 		var target = event.target;
-		// Find closest step element that is not active.
-		while (
-			!( target.classList.contains( "step" ) &&
-				!target.classList.contains( "active" ) ) &&
-			( target !== document.documentElement ) ) {
+		var bluredStep = function() {
+			var step = target.classList.contains( "step" );
+			var active = target.classList.contains( "active" );
+			return step && !active;
+		};
+
+		// Find other closest step element that is not active.
+		while ( !bluredStep() && target !== document.documentElement ) {
 			target = target.parentNode;
 		}
 
