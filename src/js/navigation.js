@@ -97,6 +97,7 @@ document.addEventListener( "impress:init", function( event ) {
 
 	// Delegated handler for clicking on the links to presentation steps.
 	document.addEventListener( "click", function( event ) {
+		var href;
 		var target = event.target;
 
 		// Event delegation with "bubbling" check if event target (or any of its parents) is a link.
@@ -105,7 +106,7 @@ document.addEventListener( "impress:init", function( event ) {
 		}
 
 		if ( target.nodeName === "A" ) {
-			var href = target.getAttribute( "href" );
+			href = target.getAttribute( "href" );
 
 			// If it's a link to presentation step, target this step.
 			if ( href && href[ 0 ] === "#" ) {
