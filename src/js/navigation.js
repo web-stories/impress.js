@@ -109,7 +109,7 @@ document.addEventListener( "impress:init", function( event ) {
 			href = target.getAttribute( "href" );
 
 			// If it's a link to presentation step, target this step.
-			if ( href && href[ 0 ] === "#" ) {
+			if ( href && href.charAt( 0 ) === "#" ) {
 				target = document.getElementById( href.slice( 1 ) );
 			}
 		}
