@@ -31,7 +31,7 @@ var prefixed = (function() {
 		return memory[ prop ];
 	};
 
-})();
+}());
 
 // `arraify` takes an array-like object and turns it into real Array
 // to make all the Array.prototype goodness available.
@@ -84,10 +84,10 @@ var $$ = function( selector, context ) {
 
 // `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data
 // and triggers it on element given as `el`.
-var triggerEvent = function( el, eventName, detail ) {
+var triggerEvent = function( element, eventName, detail ) {
 	var event = document.createEvent( "CustomEvent" );
 	event.initCustomEvent( eventName, true, true, detail );
-	el.dispatchEvent( event );
+	element.dispatchEvent( event );
 };
 
 // Builds a translate transform string for given data.
