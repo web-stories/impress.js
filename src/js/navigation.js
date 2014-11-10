@@ -4,8 +4,10 @@
 // It's because these navigation actions only need what impress.js provides with
 // its simple API.
 
-// throttling functioncalls, by Remy Sharp
+// Throttling function calls, by Remy Sharp.
 // http://remysharp.com/2010/07/21/throttling-function-calls/
+
+// TODO Debounce, instead of throttle (see link above)
 var throttle = function( fn, delay ) {
 	var timer = null;
 	return function() {
@@ -31,12 +33,12 @@ var keyCodes = {
 	TAB: 9
 };
 
-// wait for impress.js to be initialized
+// Wait for impress.js to be initialized.
 document.addEventListener( "impress:init", function( event ) {
 	// Getting API from event data.
-	// So you don't event need to know what is the id of the root element
-	// or anything. `impress:init` event data gives you everything you
-	// need to control the presentation that was just initialized.
+	// So you don't event need to know what is the id of the root element or anything.
+	// `impress:init` event data gives you everything you need to control the presentation that was
+	// just initialized.
 	var api = event.detail.api;
 
 	// KEYBOARD NAVIGATION HANDLERS
@@ -64,13 +66,13 @@ document.addEventListener( "impress:init", function( event ) {
 	// [up] [right] / [down] [left] - again common and natural addition,
 	// [pgdown] / [pgup] - often triggered by remote controllers,
 	// [tab] - this one is quite controversial, but the reason it ended up on
-	//   this list is quite an interesting story... Remember that strange part
-	//   in the impress.js code where window is scrolled to 0,0 on every presentation
-	//   step, because sometimes browser scrolls viewport because of the focused element?
-	//   Well, the [tab] key by default navigates around focusable elements, so clicking
-	//   it very often caused scrolling to focused element and breaking impress.js
-	//   positioning. I didn't want to just prevent this default action, so I used [tab]
-	//   as another way to moving to next step...
+	//  this list is quite an interesting story... Remember that strange part
+	//  in the impress.js code where window is scrolled to 0,0 on every presentation
+	//  step, because sometimes browser scrolls viewport because of the focused element?
+	//  Well, the [tab] key by default navigates around focusable elements, so clicking
+	//  it very often caused scrolling to focused element and breaking impress.js
+	//  positioning. I didn't want to just prevent this default action, so I used [tab]
+	//  as another way to moving to next step...
 	document.addEventListener( "keyup", function( event ) {
 		switch ( event.keyCode ) {
 			case keyCodes.PAGE_UP:
@@ -93,10 +95,9 @@ document.addEventListener( "impress:init", function( event ) {
 		}
 	}, false );
 
-	// delegated handler for clicking on the links to presentation steps
+	// Delegated handler for clicking on the links to presentation steps.
 	document.addEventListener( "click", function( event ) {
-		// event delegation with "bubbling"
-		// check if event target (or any of its parents is a link)
+		// Event delegation with "bubbling" check if event target (or any of its parents) is a link.
 		var target = event.target;
 		while ( ( target.tagName !== "A" ) &&
 				( target !== document.documentElement ) ) {
@@ -106,7 +107,7 @@ document.addEventListener( "impress:init", function( event ) {
 		if ( target.tagName === "A" ) {
 			var href = target.getAttribute( "href" );
 
-			// if it's a link to presentation step, target this step
+			// If it's a link to presentation step, target this step.
 			if ( href && href[ 0 ] === "#" ) {
 				target = document.getElementById( href.slice( 1 ) );
 			}
@@ -118,10 +119,10 @@ document.addEventListener( "impress:init", function( event ) {
 		}
 	}, false );
 
-	// delegated handler for clicking on step elements
+	// Delegated handler for clicking on step elements.
 	document.addEventListener( "click", function( event ) {
 		var target = event.target;
-		// find closest step element that is not active
+		// Find closest step element that is not active.
 		while (
 			!( target.classList.contains( "step" ) &&
 				!target.classList.contains( "active" ) ) &&
@@ -134,8 +135,9 @@ document.addEventListener( "impress:init", function( event ) {
 		}
 	}, false );
 
-	// touch handler to detect taps on the left and right side of the screen
-	// based on awesome work of @hakimel: https://github.com/hakimel/reveal.js
+	// Touch handler to detect taps on the left and right side of the screen, based on awesome work
+	// of @hakimel: https://github.com/hakimel/reveal.js
+	// TODO Find link for original based code
 	document.addEventListener( "touchstart", function( event ) {
 		if ( event.touches.length === 1 ) {
 			var x = event.touches[ 0 ].clientX;
