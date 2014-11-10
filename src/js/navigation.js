@@ -141,7 +141,7 @@ document.addEventListener( "impress:init", function( event ) {
 
 	// Touch handler to detect taps on the left and right side of the screen, based on awesome work
 	// of @hakimel: https://github.com/hakimel/reveal.js
-	// TODO Find link for original based code
+	// TODO Find link for original based code.
 	document.addEventListener( "touchstart", function( event ) {
 		if ( event.touches.length === 1 ) {
 			var x = event.touches[ 0 ].clientX;
@@ -160,10 +160,12 @@ document.addEventListener( "impress:init", function( event ) {
 		}
 	});
 
-	// rescale presentation when window is resized
+	// Rescale presentation when window is resized.
+	// Force going to active step again, to trigger rescaling.
 	window.addEventListener( "resize", throttle(function() {
-		// force going to active step again, to trigger rescaling
-		api.goto( document.querySelector( ".step.active" ), 500 );
+		var stepElement = document.querySelector( ".step.active" );
+		var duration = 500;
+		api.goto( stepElement, duration );
 	}, 250 ));
 
 }, false );
