@@ -3,10 +3,10 @@
 
 // HELPER FUNCTIONS
 
-// `pfx` is a function that takes a standard CSS property name as a parameter
-// and returns it's prefixed version valid for current browser it runs in.
+// Takes a standard CSS property name as a parameter and returns it's prefixed version, valid for
+// current browser it runs in.
 // The code is heavily inspired by Modernizr http://www.modernizr.com/
-var pfx = (function() {
+var prefixed = (function() {
 
 	var style = document.createElement( "dummy" ).style;
 	var prefixes = "Webkit Moz O ms Khtml".split( " " );
@@ -39,20 +39,21 @@ var arrayify = function( a ) {
 	return [].slice.call( a );
 };
 
-// `css` functionapplies the styles given in `props` object to the element
-// given as `el`. It runs all property names through `pfx` function to make
-// sure proper prefixed version of the property is used.
-var css = function( el, props ) {
-	var key, pkey;
+// Applies the styles given in `props` object to the element given as `element`.
+// It runs all property names through `prefixed` function to make sure proper prefixed version of
+// the property is used.
+var css = function( element, props ) {
+	var key, prefixedKey;
 	for ( key in props ) {
-		if ( props.hasOwnProperty( key ) ) {
-			pkey = pfx( key );
-			if ( pkey !== null ) {
-				el.style[ pkey ] = props[ key ];
-			}
+		if ( !props.hasOwnProperty( key ) ) {
+			continue;
+		}
+		prefixedKey = prefixed( key );
+		if ( prefixedKey !== null ) {
+			element.style[ prefixedKey ] = props[ key ];
 		}
 	}
-	return el;
+	return element;
 };
 
 // `toNumber` takes a value given as `numeric` parameter and tries to turn
@@ -62,8 +63,8 @@ var toNumber = function( numeric, fallback ) {
 	return isNaN( numeric ) ? ( fallback || 0 ) : Number( numeric );
 };
 
-// `byId` returns element with given `id` - you probably have guessed that ;)
-var byId = function( id ) {
+// Returns element with given `id` - you probably have guessed that ;)
+var getElementById = function( id ) {
 	return document.getElementById( id );
 };
 
@@ -89,30 +90,30 @@ var triggerEvent = function( el, eventName, detail ) {
 	el.dispatchEvent( event );
 };
 
-// `translate` builds a translate transform string for given data.
-var translate = function( t ) {
-	return " translate3d(" + t.x + "px," + t.y + "px," + t.z + "px) ";
+// Builds a translate transform string for given data.
+var translate = function( data ) {
+	return " translate3d(" + data.x + "px," + data.y + "px," + data.z + "px) ";
 };
 
-// `rotate` builds a rotate transform string for given data.
-// By default the rotations are in X Y Z order that can be reverted by passing `true`
-// as second parameter.
-var rotate = function( r, revert ) {
-	var rX = " rotateX(" + r.x + "deg) ";
-	var rY = " rotateY(" + r.y + "deg) ";
-	var rZ = " rotateZ(" + r.z + "deg) ";
+// Builds a rotate transform string for given data.
+// By default the rotations are in X Y Z order, that can be reverted by passing `true` as second
+// parameter.
+var rotate = function( data, revert ) {
+	var x = " rotateX(" + data.x + "deg) ";
+	var y = " rotateY(" + data.y + "deg) ";
+	var z = " rotateZ(" + data.z + "deg) ";
 
-	return revert ? rZ + rY + rX : rX + rY + rZ;
+	return revert ? z + y + x : x + y + z;
 };
 
-// `scale` builds a scale transform string for given data.
-var scale = function( s ) {
-	return " scale(" + s + ") ";
+// Builds a scale transform string for given data.
+var scale = function( value ) {
+	return " scale(" + value + ") ";
 };
 
-// `perspective` builds a perspective transform string for given data.
-var perspective = function( p ) {
-	return " perspective(" + p + "px) ";
+// Builds a perspective transform string for given data.
+var perspective = function( value ) {
+	return " perspective(" + value + "px) ";
 };
 
 // `getElementFromHash` returns an element located by id from hash part of
@@ -120,7 +121,7 @@ var perspective = function( p ) {
 var getElementFromHash = function() {
 	// get id from url # by removing `#` or `#/` from the beginning,
 	// so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
-	return byId( window.location.hash.replace( /^#\/?/, "" ) );
+	return getElementById( window.location.hash.replace( /^#\/?/, "" ) );
 };
 
 // `computeWindowScale` counts the scale factor between window size and size
@@ -147,7 +148,7 @@ var body = document.body;
 var ua = navigator.userAgent.toLowerCase();
 var impressSupported =
 	// browser should support CSS 3D transtorms
-	( pfx( "perspective" ) !== null ) &&
+	( prefixed( "perspective" ) !== null ) &&
 
 	// and `classList` and `dataset` APIs
 	( body.classList ) &&
@@ -191,7 +192,7 @@ var empty = function() { return false; };
 // IMPRESS.JS API
 
 // And that's where interesting things will start to happen.
-// It's the core `impress` functionthat returns the impress.js API
+// It's the core `impress` function that returns the impress.js API
 // for a presentation based on the element with given id ("impress"
 // by default).
 var impress = function( rootId ) {
@@ -234,7 +235,7 @@ var impress = function( rootId ) {
 	var windowScale = null;
 
 	// root presentation elements
-	var root = byId( rootId );
+	var root = getElementById( rootId );
 	var canvas = document.createElement( "div" );
 
 	var initialized = false;
@@ -270,32 +271,32 @@ var impress = function( rootId ) {
 		}
 	};
 
-	// `initStep` initializes given step element by reading data from its
-	// data attributes and setting correct styles.
-	var initStep = function( el, idx ) {
-		var data = el.dataset,
-			step = {
-				translate: {
-					x: toNumber( data.x ),
-					y: toNumber( data.y ),
-					z: toNumber( data.z )
-				},
-				rotate: {
-					x: toNumber( data.rotateX ),
-					y: toNumber( data.rotateY ),
-					z: toNumber( data.rotateZ || data.rotate )
-				},
-				scale: toNumber( data.scale, 1 ),
-				el: el
-			};
+	// Initializes given step element by reading data from its data attributes and setting correct
+	// styles.
+	var initStep = function( element, index ) {
+		var data = element.dataset;
+		var step = {
+			translate: {
+				x: toNumber( data.x ),
+				y: toNumber( data.y ),
+				z: toNumber( data.z )
+			},
+			rotate: {
+				x: toNumber( data.rotateX ),
+				y: toNumber( data.rotateY ),
+				z: toNumber( data.rotateZ || data.rotate )
+			},
+			scale: toNumber( data.scale, 1 ),
+			el: element
+		};
 
-		if ( !el.id ) {
-			el.id = "step-" + ( idx + 1 );
+		if ( !element.id ) {
+			element.id = "step-" + ( index + 1 );
 		}
 
-		stepsData[ "impress-" + el.id ] = step;
+		stepsData[ "impress-" + element.id ] = step;
 
-		css( el, {
+		css( element, {
 			position: "absolute",
 			transform: "translate(-50%,-50%)" +
 				translate( step.translate ) +
@@ -305,9 +306,11 @@ var impress = function( rootId ) {
 		});
 	};
 
-	// `init` API functionthat initializes (and runs) the presentation.
+	// API function that initializes (and run) the presentation.
 	var init = function() {
-		if ( initialized ) { return; }
+		if ( initialized ) {
+			return;
+		}
 
 		// First we set up the viewport for mobile devices.
 		// For some reason iPad goes nuts when it is not done properly.
@@ -399,7 +402,7 @@ var impress = function( rootId ) {
 		if ( typeof step === "number" ) {
 			step = step < 0 ? steps[ steps.length + step] : steps[ step ];
 		} else if ( typeof step === "string" ) {
-			step = byId( step );
+			step = getElementById( step );
 		}
 		return ( step && step.id && stepsData[ "impress-" + step.id ] ) ? step : null;
 	};
@@ -407,12 +410,11 @@ var impress = function( rootId ) {
 	// used to reset timeout for `impress:stepenter` event
 	var stepEnterTimeout = null;
 
-	// `goto` API functionthat moves to step given with `el` parameter
-	// (by index, id or element), with a transition `duration` optionally given as second
-	// parameter.
-	var goto = function( el, duration ) {
+	// API function that moves to step given with `element` parameter (by index, id or element),
+	// with a transition `duration` optionally given as second parameter.
+	var goto = function( element, duration ) {
 
-		if ( !initialized || !( el = getStep( el ) ) ) {
+		if ( !initialized || !( element = getStep( element ) ) ) {
 			// presentation not initialized or given element is not a step
 			return false;
 		}
@@ -428,15 +430,15 @@ var impress = function( rootId ) {
 		// about it!
 		window.scrollTo( 0, 0 );
 
-		var step = stepsData[ "impress-" + el.id ];
+		var step = stepsData[ "impress-" + element.id ];
 
 		if ( activeStep ) {
 			activeStep.classList.remove( "active" );
 			body.classList.remove( "impress-on-" + activeStep.id );
 		}
-		el.classList.add( "active" );
+		element.classList.add( "active" );
 
-		body.classList.add( "impress-on-" + el.id );
+		body.classList.add( "impress-on-" + element.id );
 
 		// compute target state of the canvas based on given step
 		var target = {
@@ -466,14 +468,14 @@ var impress = function( rootId ) {
 
 		// if the same step is re-selected, force computing window scaling,
 		// because it is likely to be caused by window resize
-		if ( el === activeStep ) {
+		if ( element === activeStep ) {
 			windowScale = computeWindowScale( config );
 		}
 
 		var targetScale = target.scale * windowScale;
 
 		// trigger leave of currently active element (if it's not the same step again)
-		if ( activeStep && activeStep !== el ) {
+		if ( activeStep && activeStep !== element ) {
 			onStepLeave( activeStep );
 		}
 
@@ -522,7 +524,7 @@ var impress = function( rootId ) {
 
 		// store current state
 		currentState = target;
-		activeStep = el;
+		activeStep = element;
 
 		// And here is where we trigger `impress:stepenter` event.
 		// We simply set up a timeout to fire it taking transition duration (and possible delay)
@@ -545,7 +547,7 @@ var impress = function( rootId ) {
 			onStepEnter( activeStep );
 		}, duration + delay );
 
-		return el;
+		return element;
 	};
 
 	// `prev` API functiongoes to previous step (in document order)
