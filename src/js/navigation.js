@@ -141,7 +141,6 @@ document.addEventListener( "impress:init", function( event ) {
 
 	// Touch handler to detect taps on the left and right side of the screen, based on awesome work
 	// of @hakimel: https://github.com/hakimel/reveal.js
-	// TODO Find link for original based code.
 	document.addEventListener( "touchstart", function( event ) {
 		if ( event.touches.length === 1 ) {
 			var x = event.touches[ 0 ].clientX;
