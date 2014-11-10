@@ -118,7 +118,7 @@ document.addEventListener( "impress:init", function( event ) {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		}
-	}, false );
+	});
 
 	// Delegated handler for clicking on step elements.
 	document.addEventListener( "click", function( event ) {
@@ -134,7 +134,7 @@ document.addEventListener( "impress:init", function( event ) {
 		if ( api.goto( target ) ) {
 			event.preventDefault();
 		}
-	}, false );
+	});
 
 	// Touch handler to detect taps on the left and right side of the screen, based on awesome work
 	// of @hakimel: https://github.com/hakimel/reveal.js
@@ -155,12 +155,12 @@ document.addEventListener( "impress:init", function( event ) {
 				event.preventDefault();
 			}
 		}
-	}, false );
+	});
 
 	// rescale presentation when window is resized
 	window.addEventListener( "resize", throttle(function() {
 		// force going to active step again, to trigger rescaling
 		api.goto( document.querySelector( ".step.active" ), 500 );
-	}, 250 ), false );
+	}, 250 ));
 
 }, false );
