@@ -57,7 +57,7 @@ document.addEventListener( "impress:init", function( event ) {
 				event.preventDefault();
 				break;
 		}
-	}, false );
+	});
 
 	// Trigger impress action (next or prev) on keyup.
 
