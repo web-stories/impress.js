@@ -33,8 +33,8 @@ var prefixed = (function() {
 
 }());
 
-// `arraify` takes an array-like object and turns it into real Array
-// to make all the Array.prototype goodness available.
+// Takes an array-like object and turns it into real Array to make all the Array.prototype goodness
+// available.
 var arrayify = function( a ) {
 	return [].slice.call( a );
 };
@@ -56,14 +56,13 @@ var css = function( element, props ) {
 	return element;
 };
 
-// `toNumber` takes a value given as `numeric` parameter and tries to turn
-// it into a number. If it is not possible it returns 0 (or other value
-// given as `fallback`).
+// Takes a value given as `numeric` parameter and tries to turn it into a number. If it is not
+// possible it returns 0 (or other value given as `fallback`).
 var toNumber = function( numeric, fallback ) {
 	return isNaN( numeric ) ? ( fallback || 0 ) : Number( numeric );
 };
 
-// Returns element with given `id` - you probably have guessed that ;)
+// Returns element with given `id`.
 var getElementById = function( id ) {
 	return document.getElementById( id );
 };
@@ -75,15 +74,14 @@ var $ = function( selector, context ) {
 	return arrayify( context.querySelectorAll( selector ) );
 };
 
-// `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data
-// and triggers it on element given as `el`.
-var triggerEvent = function( element, eventName, detail ) {
+// Builds a custom DOM event with the given `eventName` and `data`, then triggers it on `element`.
+var triggerEvent = function( element, eventName, data ) {
 	var event = document.createEvent( "CustomEvent" );
-	event.initCustomEvent( eventName, true, true, detail );
+	event.initCustomEvent( eventName, true, true, data );
 	element.dispatchEvent( event );
 };
 
-// Builds a translate transform string for given data.
+// Builds a translate transform string for the given data.
 var translate = function( data ) {
 	return " translate3d(" + data.x + "px," + data.y + "px," + data.z + "px) ";
 };
@@ -109,16 +107,14 @@ var perspective = function( value ) {
 	return " perspective(" + value + "px) ";
 };
 
-// `getElementFromHash` returns an element located by id from hash part of
-// window location.
+// Returns an element located by id from hash part of window location.
 var getElementFromHash = function() {
-	// get id from url # by removing `#` or `#/` from the beginning,
-	// so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
+	// Get id from url # (hash) by removing `#` or `#/` from the beginning, so both
+	// "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
 	return getElementById( window.location.hash.replace( /^#\/?/, "" ) );
 };
 
-// `computeWindowScale` counts the scale factor between window size and size
-// defined for the presentation in the config.
+// Counts the scale factor between window size and size defined for the presentation in the config.
 var computeWindowScale = function( config ) {
 	var hScale = window.innerHeight / config.height;
 	var wScale = window.innerWidth / config.width;
@@ -136,24 +132,23 @@ var computeWindowScale = function( config ) {
 };
 
 // CHECK SUPPORT
-var body = document.body;
 
+var body = document.body;
 var ua = navigator.userAgent.toLowerCase();
 var impressSupported =
-	// browser should support CSS 3D transtorms
+	// Browser should support CSS 3D transforms.
 	( prefixed( "perspective" ) !== null ) &&
 
-	// and `classList` and `dataset` APIs
+	// Should also support `classList` and `dataset` APIs
 	( body.classList ) &&
 	( body.dataset ) &&
 
-	// but some mobile devices need to be blacklisted,
-	// because their CSS 3D support or hardware is not
+	// Some mobile devices need to be blacklisted, because their CSS 3D support or hardware is not
 	// good enough to run impress.js properly, sorry...
 	( ua.search( /(iphone)|(ipod)|(android)/ ) === -1 );
 
 if ( !impressSupported ) {
-	// we can't be sure that `classList` is supported
+	// We can't be sure that `classList` is supported.
 	body.className += " impress-not-supported ";
 } else {
 	body.classList.remove( "impress-not-supported" );
@@ -167,7 +162,7 @@ if ( !impressSupported ) {
 // sure if it makes any sense in practice ;)
 var roots = {};
 
-// some default config values.
+// Some default config values.
 var defaults = {
 	width: 1024,
 	height: 768,
@@ -179,20 +174,19 @@ var defaults = {
 	transitionDuration: 1000
 };
 
-// it's just an empty function... and a useless comment.
+// Tt's just an empty function... and a useless comment.
 var empty = function() { return false; };
 
 // IMPRESS.JS API
 
 // And that's where interesting things will start to happen.
-// It's the core `impress` function that returns the impress.js API
-// for a presentation based on the element with given id ("impress"
-// by default).
+// It's the core `impress` function that returns the impress.js API for a presentation based on
+// the element with given id ("impress" by default).
 var impress = function( rootId ) {
 
-	// If impress.js is not supported by the browser return a dummy API
-	// it may not be a perfect solution but we return early and avoid
-	// running code that may use features not implemented in the browser.
+	// If impress.js is not supported by the browser, return a dummy API.
+	// It may not be a perfect solution but we return early and avoid running code that may use
+	// features not implemented in the browser.
 	if ( !impressSupported ) {
 		return {
 			init: empty,
@@ -204,30 +198,31 @@ var impress = function( rootId ) {
 
 	rootId = rootId || "impress";
 
-	// if given root is already initialized just return the API
+	// If given root is already initialized, just return the API.
 	if ( roots[ "impress-root-" + rootId ] ) {
 		return roots[ "impress-root-" + rootId ];
 	}
 
-	// data of all presentation steps
+	// Data of all presentation steps.
+	// TODO Where is this data used exactly?
 	var stepsData = {};
 
-	// element of currently active step
+	// Element of currently active step.
 	var activeStep = null;
 
-	// current state (position, rotation and scale) of the presentation
+	// Current state (position, rotation and scale) of the presentation.
 	var currentState = null;
 
-	// array of step elements
+	// Array of step elements.
 	var steps = null;
 
-	// configuration options
+	// Configuration options.
 	var config = null;
 
-	// scale factor of the browser window
+	// Scale factor of the browser window.
 	var windowScale = null;
 
-	// root presentation elements
+	// Root presentation elements.
 	var root = getElementById( rootId );
 	var canvas = document.createElement( "div" );
 
@@ -235,18 +230,16 @@ var impress = function( rootId ) {
 
 	// STEP EVENTS
 	//
-	// There are currently two step events triggered by impress.js
-	// `impress:stepenter` is triggered when the step is shown on the
-	// screen (the transition from the previous one is finished) and
-	// `impress:stepleave` is triggered when the step is left (the
-	// transition to next step just starts).
+	// There are currently two step events triggered by impress.js:
+	// * `impress:stepenter` is triggered when the step is shown on the screen (the transition
+	// from the previous one is finished).
+	// * `impress:stepleave` is triggered when the step is left (the transition to next step
+	// just starts).
 
-	// reference to last entered step
 	var lastEntered = null;
 
-	// `onStepEnter` is called whenever the step element is entered
-	// but the event is triggered only if the step is different than
-	// last entered step.
+	// Called whenever the step element is entered, but the event is triggered only if the step is
+	// different than the last entered step.
 	var onStepEnter = function( step ) {
 		if ( lastEntered !== step ) {
 			triggerEvent( step, "impress:stepenter" );
@@ -254,9 +247,8 @@ var impress = function( rootId ) {
 		}
 	};
 
-	// `onStepLeave` is called whenever the step element is left
-	// but the event is triggered only if the step is the same as
-	// last entered step.
+	// Called whenever the step element is left, but the event is triggered only if the step is
+	// the same as last entered step.
 	var onStepLeave = function( step ) {
 		if ( lastEntered === step ) {
 			triggerEvent( step, "impress:stepleave" );
@@ -306,7 +298,8 @@ var impress = function( rootId ) {
 		}
 
 		// First we set up the viewport for mobile devices.
-		// For some reason iPad goes nuts when it is not done properly.
+		// For some reason, iPad goes nuts when it is not done properly.
+		// TODO Which reason? Does it still occurs?
 		var meta = $( "meta[name='viewport']" )[ 0 ] || document.createElement( "meta" );
 		meta.content = "width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no";
 		if ( meta.parentNode !== document.head ) {
@@ -314,7 +307,7 @@ var impress = function( rootId ) {
 			document.head.appendChild( meta );
 		}
 
-		// initialize configuration object
+		// Initialize configuration object.
 		var rootData = root.dataset;
 		config = {
 			width: toNumber( rootData.width, defaults.width ),
@@ -329,13 +322,13 @@ var impress = function( rootId ) {
 
 		windowScale = computeWindowScale( config );
 
-		// wrap steps with "canvas" element
+		// Wrap steps with a container element.
 		arrayify( root.childNodes ).forEach(function( el ) {
 			canvas.appendChild( el );
 		});
 		root.appendChild( canvas );
 
-		// set initial styles
+		// Set initial styles.
 		document.documentElement.style.height = "100%";
 
 		css( body, {
@@ -361,11 +354,11 @@ var impress = function( rootId ) {
 		body.classList.remove( "impress-disabled" );
 		body.classList.add( "impress-enabled" );
 
-		// get and init steps
+		// Get and init steps.
 		steps = $( ".step", root );
 		steps.forEach( initStep );
 
-		// set a default initial state of the canvas
+		// Set a default initial state of the canvas.
 		currentState = {
 			translate: {
 				x: 0,
@@ -387,28 +380,29 @@ var impress = function( rootId ) {
 		});
 	};
 
-	// `getStep` is a helper functionthat returns a step element defined by parameter.
-	// If a number is given, step with index given by the number is returned, if a string
-	// is given step element with such id is returned, if DOM element is given it is returned
-	// if it is a correct step element.
+	// Helper function that returns a step element according to the parameter:
+	// * If a number is given, step with index given by the number is returned.
+	// * If a string is given, step element with such id is returned.
+	// * If DOM element is given, it is returned if it is a valid step element.
 	var getStep = function( step ) {
 		if ( typeof step === "number" ) {
 			step = step < 0 ? steps[ steps.length + step] : steps[ step ];
 		} else if ( typeof step === "string" ) {
 			step = getElementById( step );
 		}
-		return ( step && step.id && stepsData[ "impress-" + step.id ] ) ? step : null;
+		return step && step.id && stepsData[ "impress-" + step.id ] ? step : null;
 	};
 
-	// used to reset timeout for `impress:stepenter` event
+	// Used to reset timeout for `impress:stepenter` event.
 	var stepEnterTimeout = null;
 
-	// API function that moves to step given with `element` parameter (by index, id or element),
-	// with a transition `duration` optionally given as second parameter.
-	var goto = function( element, duration ) {
+	// API function that moves to step according to the `argument` parameter (by index, id
+	// or element), with a transition `duration` optionally given as second parameter.
+	var goto = function( argument, duration ) {
+		var element = getStep( argument );
 
-		if ( !initialized || !( element = getStep( element ) ) ) {
-			// presentation not initialized or given element is not a step
+		// Presentation not initialized or given element is not a step.
+		if ( !initialized || !element ) {
 			return false;
 		}
 
@@ -421,6 +415,8 @@ var impress = function( rootId ) {
 		//
 		// If you are reading this and know any better way to handle it, I'll be glad to hear
 		// about it!
+		//
+		// TODO See exactly what this is about. Does it still occurs in modern browsers?
 		window.scrollTo( 0, 0 );
 
 		var step = stepsData[ "impress-" + element.id ];
@@ -433,7 +429,7 @@ var impress = function( rootId ) {
 
 		body.classList.add( "impress-on-" + element.id );
 
-		// compute target state of the canvas based on given step
+		// Compute target state of the canvas container based on the given step.
 		var target = {
 			rotate: {
 				x: -step.rotate.x,
@@ -450,39 +446,37 @@ var impress = function( rootId ) {
 
 		// Check if the transition is zooming in or not.
 		//
-		// This information is used to alter the transition style:
-		// when we are zooming in - we start with move and rotate transition
-		// and the scaling is delayed, but when we are zooming out we start
-		// with scaling down and move and rotation are delayed.
+		// This information is used to alter the transition style: when we are zooming in - we
+		// start with move and rotate transition and the scaling is delayed, but when we are
+		// zooming out we start with scaling down and move and rotation are delayed.
 		var zoomin = target.scale >= currentState.scale;
 
 		duration = toNumber( duration, config.transitionDuration );
 		var delay = duration / 2;
 
-		// if the same step is re-selected, force computing window scaling,
-		// because it is likely to be caused by window resize
+		// If the same step is re-selected, force computing window scaling, because it is likely
+		// to be caused by window resize.
 		if ( element === activeStep ) {
 			windowScale = computeWindowScale( config );
 		}
 
 		var targetScale = target.scale * windowScale;
 
-		// trigger leave of currently active element (if it's not the same step again)
+		// Trigger leave of currently active element (if it's not the same step again).
 		if ( activeStep && activeStep !== element ) {
 			onStepLeave( activeStep );
 		}
 
 		// Now we alter transforms of `root` and `canvas` to trigger transitions.
 		//
-		// And here is why there are two elements: `root` and `canvas` - they are
-		// being animated separately:
+		// And here is why there are two elements `root` and `canvas`: they are being animated
+		// separately.
 		// `root` is used for scaling and `canvas` for translate and rotations.
-		// Transitions on them are triggered with different delays (to make
-		// visually nice and "natural" looking transitions), so we need to know
-		// that both of them are finished.
+		// Transitions on them are triggered with different delays (to make visually nice and
+		// "natural" looking transitions), so we need to know that both of them are finished.
 		css( root, {
-			// to keep the perspective look similar for different scales
-			// we need to "scale" the perspective, too
+			// To keep the perspective look similar for different scales, we need to "scale" the
+			// perspective, too.
 			transform: perspective( config.perspective / targetScale ) + scale( targetScale ),
 			transitionDuration: duration + "ms",
 			transitionDelay: ( zoomin ? delay : 0 ) + "ms"
@@ -515,7 +509,7 @@ var impress = function( rootId ) {
 			delay = 0;
 		}
 
-		// store current state
+		// Store current state.
 		currentState = target;
 		activeStep = element;
 
@@ -524,17 +518,16 @@ var impress = function( rootId ) {
 		// into account.
 		//
 		// I really wanted to make it in more elegant way. The `transitionend` event seemed to
-		// be the best way to do it, but the fact that I"m using transitions on two separate
+		// be the best way to do it, but the fact that I'm using transitions on two separate
 		// elements and that the `transitionend` event is only triggered when there was a
 		// transition (change in the values) caused some bugs and made the code really
 		// complicated, cause I had to handle all the conditions separately. And it still
 		// needed a `setTimeout` fallback for the situations when there is no transition at all.
-		// So I decided that I"d rather make the code simpler than use shiny
-		// new `transitionend`.
+		// So I decided that I'd rather make the code simpler than use shiny new `transitionend`.
 		//
 		// If you want learn something interesting and see how it was done with
-		// `transitionend` go back to version 0.5.2 of
-		// impress.js: http://github.com/bartaz/impress.js/blob/0.5.2/js/impress.js
+		// `transitionend` go back to version 0.5.2 of impress.js:
+		// http://github.com/bartaz/impress.js/blob/0.5.2/js/impress.js
 		window.clearTimeout( stepEnterTimeout );
 		stepEnterTimeout = window.setTimeout(function() {
 			onStepEnter( activeStep );
@@ -543,7 +536,7 @@ var impress = function( rootId ) {
 		return element;
 	};
 
-	// `prev` API functiongoes to previous step (in document order)
+	// API function that goes to the previous step (in document order).
 	var prev = function() {
 		var prev = steps.indexOf( activeStep ) - 1;
 		prev = prev >= 0 ? steps[ prev ] : steps[ steps.length - 1  ];
@@ -551,7 +544,7 @@ var impress = function( rootId ) {
 		return goto( prev );
 	};
 
-	// `next` API function goes to next step (in document order)
+	// API function that goes to the next step (in document order)
 	var next = function() {
 		var next = steps.indexOf( activeStep ) + 1;
 		next = next < steps.length ? steps[ next ] : steps[ 0 ];
@@ -562,18 +555,16 @@ var impress = function( rootId ) {
 	// Adding some useful classes to step elements.
 	//
 	// All the steps that have not been shown yet are given `future` class.
-	// When the step is entered the `future` class is removed and the `present`
-	// class is given. When the step is left `present` class is replaced with
-	// `past` class.
+	// When the step is entered the `future` class is removed and the `present` class is given.
+	// When the step is left `present` class is replaced with `past` class.
 	//
 	// So every step element is always in one of three possible states:
-	// `future`, `present` and `past`.
+	// `future`, `present` or `past`.
 	//
-	// There classes can be used in CSS to style different types of steps.
+	// Those classes can be used in CSS to style different types of steps.
 	// For example the `present` class can be used to trigger some custom
 	// animations when step is shown.
 	root.addEventListener( "impress:init", function() {
-		// STEP CLASSES
 		steps.forEach(function( step ) {
 			step.classList.add( "future" );
 		});
@@ -588,13 +579,12 @@ var impress = function( rootId ) {
 			event.target.classList.remove( "present" );
 			event.target.classList.add( "past" );
 		}, false );
-
 	}, false );
 
 	// Adding hash change support.
 	root.addEventListener( "impress:init", function() {
 
-		// last hash detected
+		// Last hash detected.
 		var lastHash = "";
 
 		// `#/step-id` is used instead of `#step-id` to prevent default browser
@@ -603,29 +593,30 @@ var impress = function( rootId ) {
 		// And it has to be set after animation finishes, because in Chrome it
 		// makes transtion laggy.
 		// BUG: http://code.google.com/p/chromium/issues/detail?id=62820
+		//
+		// TODO Does it still happens? Check ticket.
 		root.addEventListener( "impress:stepenter", function( event ) {
 			window.location.hash = lastHash = "#/" + event.target.id;
 		}, false );
 
 		window.addEventListener( "hashchange", function() {
-			// When the step is entered hash in the location is updated
-			// (just few lines above from here), so the hash change is
-			// triggered and we would call `goto` again on the same element.
+			// When the step is entered, the hash in the location is updated
+			// (just few lines above from here), so the hash change is triggered and we would
+			// call `goto` again on the same element.
 			//
-			// To avoid this we store last entered hash and compare.
+			// To avoid this we store the last entered hash and compare.
 			if ( window.location.hash !== lastHash ) {
 				goto( getElementFromHash() );
 			}
 		}, false );
 
-		// START
-		// by selecting step defined in url or first step of the presentation
+		// Start the step defined in url or first step of the presentation.
 		goto( getElementFromHash() || steps[ 0 ], 0 );
 	}, false );
 
 	body.classList.add( "impress-disabled" );
 
-	// store and return API for given impress.js root element
+	// store and return the API for given impress.js root element.
 	return (roots[ "impress-root-" + rootId ] = {
 		init: init,
 		goto: goto,
