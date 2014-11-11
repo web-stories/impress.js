@@ -57,7 +57,7 @@ var css = function( element, props ) {
 };
 
 // Takes a value given as `numeric` parameter and tries to turn it into a number. If it is not
-// possible it returns 0 (or other value given as `fallback`).
+//possible it returns 0 (or other value given as `fallback`).
 var toNumber = function( numeric, fallback ) {
 	return isNaN( numeric ) ? ( fallback || 0 ) : Number( numeric );
 };
@@ -407,7 +407,7 @@ var impress = function( argument ) {
 	// Used to reset timeout for `impress:stepenter` event.
 	var stepEnterTimeout = null;
 
-	// API function that moves to step according to the `argument` parameter (by index, id
+	// API function that moves to step according to the `argument` parameter (by step index, id
 	// or element), with a transition `duration` optionally given as second parameter.
 	var goto = function( argument, duration ) {
 		var element = getStep( argument );
@@ -462,7 +462,14 @@ var impress = function( argument ) {
 		// zooming out we start with scaling down and move and rotation are delayed.
 		var zoomin = target.scale >= currentState.scale;
 
-		duration = toNumber( duration, config.transitionDuration );
+		// If a duration was specified, use that, otherwise use the step data attribute.
+		var stepData = element.dataset;
+		if ( arguments.length > 1 ) {
+			duration = toNumber( duration, config.transitionDuration );
+		} else {
+			duration = toNumber( stepData.transitionDuration, config.transitionDuration );
+		}
+
 		var delay = duration / 2;
 
 		// If the same step is re-selected, force computing window scaling, because it is likely
