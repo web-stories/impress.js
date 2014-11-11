@@ -109,8 +109,8 @@ var perspective = function( value ) {
 
 // Returns an element located by id from hash part of window location.
 var getElementFromHash = function() {
-	// Get id from url # (hash) by removing `#` or `#/` from the beginning, so both
-	// "fallback" `#slide-id` and "enhanced" `#/slide-id` will work
+	// Get id from url # (hash) by removing `#` or `#/` from the beginning.
+	// The `#/` pattern can be used to avoid flickering in safari and IE.
 	return getElementById( window.location.hash.replace( /^#\/?/, "" ) );
 };
 
@@ -589,13 +589,26 @@ var impress = function( rootId ) {
 		// Last hash detected.
 		var lastHash = "";
 
-		// `#/step-id` is used instead of `#step-id` to prevent default browser
-		// scrolling to element in hash.
+		// Update the hash in the address bar.
+		//
+		// To avoid flickering in safari and IE (because of the native hash behavior) we
+		// temporarily remove the element id and add it back after the URL is updated.
 		root.addEventListener( "impress:stepenter", function( event ) {
-			window.location.hash = lastHash = "#/" + event.target.id;
+			var element = getElementById( event.target.id );
+			var id = element.id;
+			element.removeAttribute( "id" );
+			window.location.hash = lastHash = "#" + id;
+			element.setAttribute( "id", id );
 		});
 
-		window.addEventListener( "hashchange", function() {
+		// Prevent default hash jump when loading the page.
+		// There is still some flickering on safari and IE, but for the first page loading that's
+		// acceptable.
+		window.onscroll = function( event ) {
+			window.scrollTo( 0, 0 );
+		};
+
+		window.addEventListener( "hashchange", function( event ) {
 			// When the step is entered, the hash in the location is updated
 			// (just few lines above from here), so the hash change is triggered and we would
 			// call `goto` again on the same element.
