@@ -1,6 +1,6 @@
 {
   "name": "impress",
-  "version": "0.0.0",
+  "version": "0.5.4-pre",
   "description": "A presentation framework based on the power of CSS3 transforms and transitions.",
   "scripts": {
     "test": "grunt test"
