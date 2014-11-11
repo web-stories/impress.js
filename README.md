@@ -32,6 +32,9 @@ EXAMPLES AND OTHER LEARNING RESOURCES
 
 [impress.js demo](http://web-stories.github.io/impress.js) by [@bartaz](http://twitter.com/bartaz)
 
+### API Docs
+[impress.js api](http://web-stories.github.io/impress.js/api) by [@FagnerMartinsBrack](https://github.com/FagnerMartinsBrack)
+
 WANT TO CONTRIBUTE?
 ---------------------
 
