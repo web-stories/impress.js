@@ -591,12 +591,6 @@ var impress = function( rootId ) {
 
 		// `#/step-id` is used instead of `#step-id` to prevent default browser
 		// scrolling to element in hash.
-		//
-		// And it has to be set after animation finishes, because in Chrome it
-		// makes transtion laggy.
-		// BUG: http://code.google.com/p/chromium/issues/detail?id=62820
-		//
-		// TODO Does it still happens? Check ticket.
 		root.addEventListener( "impress:stepenter", function( event ) {
 			window.location.hash = lastHash = "#/" + event.target.id;
 		});
