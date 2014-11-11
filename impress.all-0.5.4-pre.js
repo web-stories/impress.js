@@ -208,7 +208,10 @@ var empty = function() {};
 // And that's where interesting things will start to happen.
 // It's the core `impress` function that returns the impress.js API for a presentation based on
 // the element with given id ("impress" by default).
-var impress = function( rootId ) {
+//
+// If a DOM element is specified, it uses that element instead of searching for the id.
+var impress = function( argument ) {
+	var rootId;
 
 	// If impress.js is not supported by the browser, return a dummy API.
 	// It may not be a perfect solution but we return early and avoid running code that may use
@@ -222,6 +225,12 @@ var impress = function( rootId ) {
 		};
 	}
 
+	// Find the element root id
+	if ( typeof argument === "string" ) {
+		rootId = argument;
+	} else if ( argument && "nodeType" in argument ) {
+		rootId = argument.id;
+	}
 	rootId = rootId || "impress";
 
 	// If given root is already initialized, just return the API.
