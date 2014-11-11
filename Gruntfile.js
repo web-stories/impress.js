@@ -71,7 +71,8 @@ module.exports = function( grunt ) {
 			all: {
 				options: {
 					urls: [
-						"http://localhost:8000/test/amd/requireJS.html?version=<%= pkg.version %>"
+						"http://localhost:8000/test/amd/requireJS.html?version=<%= pkg.version %>",
+						"http://localhost:8000/test/api/index.html?version=<%= pkg.version %>"
 					]
 				}
 			}
