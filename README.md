@@ -12,7 +12,7 @@ impress.js may not help you if you have nothing interesting to say ;)
 HOW TO USE IT
 ---------------
 
-[Use the source](http://github.com/bartaz/impress.js/blob/master/index.html), Luke ;)
+[Use the source](https://github.com/web-stories/impress.js/blob/master/gh-pages/demo/index.html), Luke ;)
 
 If you have no idea what I mean by that, or you just clicked that link above and got 
 very confused by all these strange characters that got displayed on your screen,
@@ -28,33 +28,18 @@ editing tool for impress.js. Let's hope they will manage to do it.
 EXAMPLES AND OTHER LEARNING RESOURCES
 ---------------------------------------
 
-### Official demo
+### Demo
 
-[impress.js demo](http://bartaz.github.com/impress.js) by [@bartaz](http://twitter.com/bartaz)
-
-### Examples and demos
-
-More examples and demos can be found on [Examples and demos wiki page](http://github.com/bartaz/impress.js/wiki/Examples-and-demos).
-
-Feel free to add your own example presentations (or websites) there.
-
-### Other tutorials and learning resources
-
-If you want to learn even more there is a [list of tutorials and other learning resources](https://github.com/bartaz/impress.js/wiki/impress.js-tutorials-and-other-learning-resources)
-on the wiki, too.
-
-There is also a book available about [Building impressive presentations with impress.js](http://www.packtpub.com/building-impressive-presentations-with-impressjs/book) by Rakhitha Nimesh Ratnayake.
-
+[impress.js demo](http://web-stories.github.io/impress.js) by [@bartaz](http://twitter.com/bartaz)
 
 WANT TO CONTRIBUTE?
 ---------------------
 
 If you've found a bug or have a great idea for new feature let me know by [adding your suggestion]
-(http://github.com/bartaz/impress.js/issues/new) to [issues list](https://github.com/bartaz/impress.js/issues).
+(https://github.com/web-stories/impress.js/issues/new) to [issues list](https://github.com/web-stories/impress.js/issues).
 
-If you have fixed a bug or implemented a feature that you'd like to share, send your pull request against [dev branch]
-(http://github.com/bartaz/impress.js/tree/dev). But remember that I only accept code that fits my vision of impress.js
-and my coding standards - so make sure you are open for discussion :)
+If you have fixed a bug or implemented a feature that you'd like to share, send your pull request against [master branch]
+(https://github.com/web-stories/impress.js).
 
 
 
@@ -230,9 +215,7 @@ BROWSER SUPPORT
 
 ### TL;DR;
 
-Currently impress.js works fine in latest Chrome/Chromium browser, Safari 5.1 and Firefox 10.
-With addition of some HTML5 polyfills (see below for details) it should work in Internet Explorer 10
-(currently available as Developers Preview).
+Currently impress.js works fine for [evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers/) browsers.
 It doesn't work in Opera, as it doesn't support CSS 3D transforms.
 
 As a presentation tool it was not developed with mobile browsers in mind, but some tablets are good
@@ -245,8 +228,8 @@ Additionally for the animations to run smoothly it's required to have hardware
 acceleration support in your browser. This depends on the browser, your operating
 system and even kind of graphic hardware you have in your machine.
 
-For browsers not supporting CSS3 3D transforms impress.js adds `impress-not-supported`
-class on `#impress` element, so fallback styles can be applied to make all the content accessible.
+For browsers not supporting required features, impress.js adds `impress-not-supported`
+class on `body` element, so fallback styles can be applied to make all the content accessible.
 
 
 ### Even more explanation and technical stuff
