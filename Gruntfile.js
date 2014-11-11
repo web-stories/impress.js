@@ -6,7 +6,9 @@ module.exports = function( grunt ) {
 		jscs: {
 			files: [
 				"Gruntfile.js",
-				"src/js/**/*.js"
+				"src/js/**/*.js",
+				"test/**/*.js",
+				"!test/vendor/**/*.js"
 			]
 		},
 		jshint: {
@@ -23,7 +25,9 @@ module.exports = function( grunt ) {
 			},
 			files: [
 				"Gruntfile.js",
-				"src/js/**/*.js"
+				"src/js/**/*.js",
+				"test/**/*.js",
+				"!test/vendor/**/*.js"
 			]
 		},
 		copy: {

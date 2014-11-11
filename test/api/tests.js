@@ -1,3 +1,5 @@
+/* global assert: false, test: false, ok: false, impress: false */
+
 module( "Constructor" );
 
 test( "Should accept id as string", function() {
@@ -10,13 +12,13 @@ test( "Should accept id as string", function() {
 test( "Should default to 'impress' id", function() {
 	var element = document.getElementById( "impress" );
 	impress().init();
-	
+
 	ok( !!element.getAttribute( "style" ), "Impress should be initialized on the element" );
 });
 
 test( "Should accept a custom DOM element", function() {
 	var element = document.getElementById( "customElement" );
 	impress( element ).init();
-	
+
 	ok( !!element.getAttribute( "style" ), "Impress should be initialized on the element" );
 });
