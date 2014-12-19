@@ -12,7 +12,7 @@ impress.js may not help you if you have nothing interesting to say ;)
 HOW TO USE IT
 ---------------
 
-[Use the source](https://github.com/web-stories/impress.js/blob/master/gh-pages/demo/index.html), Luke ;)
+[Check the API](API.md) or [Use the source](blob/master/gh-pages/demo/index.html), Luke ;)
 
 If you have no idea what I mean by that, or you just clicked that link above and got 
 very confused by all these strange characters that got displayed on your screen,
@@ -54,6 +54,17 @@ It's an (un)fortunate coincidence that a Open/LibreOffice presentation tool is c
 
 VERSION HISTORY
 -----------------
+
+### 0.6.0 ([browse](#), [zip](#), [tar](#))
+
+#### CHANGELOG
+
+* #1: Add grunt for build
+* #3: AMD Support
+* #6: `transition-duration` for individual steps
+* #7: Remove need for slash before the hashbang on each step
+* #8: Do not restrict constructor to use ID only
+* #12: Split core and navigation module
 
 ### 0.5.3 ([browse](http://github.com/bartaz/impress.js/tree/0.5.3), [zip](http://github.com/bartaz/impress.js/zipball/0.5.3), [tar](http://github.com/bartaz/impress.js/tarball/0.5.3))
 
