@@ -12,7 +12,7 @@ impress.js may not help you if you have nothing interesting to say ;)
 HOW TO USE IT
 ---------------
 
-[Check the API](API.md) or [Use the source](blob/master/gh-pages/demo/index.html), Luke ;)
+[Check the API](API.md) or [Use the source](gh-pages/demo/index.html), Luke ;)
 
 If you have no idea what I mean by that, or you just clicked that link above and got 
 very confused by all these strange characters that got displayed on your screen,
