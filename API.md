@@ -55,7 +55,8 @@ Additional information can be specified using `data-*` attributes.
 The element used for impress initialization.
 
 **data-transition-duration**  
-Type: `Number`
+Type: `Number`  
+Default: `1000`
 
 Specify a duration in milliseconds for each step.
 
