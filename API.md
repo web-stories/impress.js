@@ -69,3 +69,15 @@ Type: `Number`
 
 Specify a duration in milliseconds for the step.  
 *Note*: This overrides the `data-transition-duration` declaration from the root element if present.
+
+**data-x**  
+Type: `Number`  
+Default: `0`
+
+The "x" position in which **the center** of the step element will be initially positioned relative to the whole presentation canvas.
+
+**data-y**  
+Type: `Number`  
+Default: `0`
+
+The "y" position in which **the center** of the step will be initially positioned relative to the whole presentation canvas.
