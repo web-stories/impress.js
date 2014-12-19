@@ -2,11 +2,9 @@
 
 The javascript API methods are exposed from the return of the `impress().init()` call.
 
-### Base methods
-
 #### impress( [ id ] [, element ] )
 
-Method that returns the reference to the **impress context**.
+The constructor method that returns the **API Object**.
 
 **id**  
 Type: `String`
@@ -18,11 +16,11 @@ Type: `Element`
 
 The root element being used to start impress.
 
+### API Object
+
 #### init()
 
-Initializes impress into the given **impress context** and returns the **API object**.
-
-### API Object
+Initializes impress.
 
 #### next()
 
