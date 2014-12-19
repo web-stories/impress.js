@@ -8,12 +8,12 @@ The javascript API methods are exposed from the return of the `impress().init()`
 
 Method that returns the reference to the **impress context**.
 
-**id**
+**id**  
 Type: `String`
 
 A string representing the id of the root element being used to start impress. Default to "impress".
 
-**element**
+**element**  
 Type: `Element`
 
 The root element being used to start impress.
@@ -36,12 +36,12 @@ Go to the previous step.
 
 Go to a specific step.
 
-**step**
+**step**  
 Type: `Number`
 
 The zero-based index of the step to go to.
 
-**duration**
+**duration**  
 Type: `Number`
 
 The duration in milliseconds for the animation to complete
