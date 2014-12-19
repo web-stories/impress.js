@@ -46,6 +46,25 @@ Type: `Number`
 
 The duration in milliseconds for the animation to complete
 
-#### Data Attributes
+### Data Attributes
 
-// TODO
+Additional information can be specified using `data-*` attributes.
+
+### Impress root element
+
+The element used for impress initialization.
+
+**data-transition-duration**  
+Type: `Number`
+
+Specify a duration in milliseconds for each step.
+
+### Impress step element
+
+Any individual step inside the root element.
+
+**data-transition-duration**  
+Type: `Number`
+
+Specify a duration in milliseconds for the step.  
+*Note*: This overrides the `data-transition-duration` declaration from the root element if present.
