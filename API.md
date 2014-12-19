@@ -44,6 +44,19 @@ Type: `Number`
 
 The duration in milliseconds for the animation to complete
 
+#### support( fn )
+
+Add a custom support rule using user agent sniffing to test for a faulty 3D support.
+
+**fn**  
+Type: `Function`  
+
+A function that should return `true` if the current device succeeds to handle the whole presentation or `false` if it fails.  
+The `fn` function is called with the first argument representing the `navigator.userAgent` value.
+
+* If impress default support succeeds, but the custom support fails, then impress assumes the current device is not supported.
+* If the impress default support fails, then impress assumes the current device is not supported, disregarding the custom support condition.
+
 ### Data Attributes
 
 Additional information can be specified using `data-*` attributes.
