@@ -102,6 +102,13 @@ module.exports = function( grunt ) {
 					]
 				}
 			}
+		},
+		watch: {
+			files: [
+				"src/**/*.*",
+				"test/**/*.*"
+			],
+			tasks: [ "validate", "files" ]
 		}
 	};
 
@@ -117,5 +124,6 @@ module.exports = function( grunt ) {
 
 	// Special tasks
 	grunt.registerTask( "default", [ "validate", "files", "test" ] );
+	grunt.registerTask( "dev", [ "validate", "files", "connect", "watch" ] );
 	grunt.registerTask( "pages", [ "default", "gh-pages" ] );
 };
