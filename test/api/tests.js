@@ -1,4 +1,4 @@
-/* global assert: false, test: false, ok: false, strictEqual: false, impress: false */
+/* global test: false, ok: false, strictEqual: false, impress: false */
 
 module( "Constructor" );
 

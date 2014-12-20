@@ -1,16 +1,25 @@
 module.exports = function( grunt ) {
-
 	"use strict";
+
+	var validateFiles = [
+		"Gruntfile.js",
+
+		"src/angular/**/*.js",
+		"!src/angular/intro.js",
+		"!src/angular/outro.js",
+
+		"src/js/**/*.js",
+		"!src/js/intro.js",
+		"!src/js/outro.js",
+
+		"test/**/*.js",
+		"!test/vendor/**/*.js"
+	];
 
 	var configs = {
 		pkg: grunt.file.readJSON( "bower.json" ),
 		jscs: {
-			files: [
-				"Gruntfile.js",
-				"src/js/**/*.js",
-				"test/**/*.js",
-				"!test/vendor/**/*.js"
-			]
+			files: validateFiles
 		},
 		jshint: {
 			options: {
@@ -24,12 +33,7 @@ module.exports = function( grunt ) {
 				"noempty": true,
 				"undef": true
 			},
-			files: [
-				"Gruntfile.js",
-				"src/js/**/*.js",
-				"test/**/*.js",
-				"!test/vendor/**/*.js"
-			]
+			files: validateFiles
 		},
 		copy: {
 			demo: {
@@ -45,20 +49,36 @@ module.exports = function( grunt ) {
 			}
 		},
 		concat: {
-			options: {
-				banner: grunt.file.read( "src/partial/intro.js" ),
-				footer: grunt.file.read( "src/partial/outro.js" )
-			},
 			core: {
+				options: {
+					banner: grunt.file.read( "src/js/intro.js" ),
+					footer: grunt.file.read( "src/js/outro.js" )
+				},
 				files: {
 					"dist/<%= pkg.name %>-<%= pkg.version %>.js": [ "src/js/core.js" ]
 				}
 			},
 			all: {
+				options: {
+					banner: grunt.file.read( "src/js/intro.js" ),
+					footer: grunt.file.read( "src/js/outro.js" )
+				},
 				files: {
 					"dist/<%= pkg.name %>.all-<%= pkg.version %>.js": [
 						"src/js/core.js",
 						"src/js/navigation.js"
+					]
+				}
+			},
+			angularCore: {
+				options: {
+					banner: grunt.file.read( "src/angular/intro.js" ),
+					footer: grunt.file.read( "src/angular/outro.js" )
+				},
+				files: {
+					"dist/angular-<%= pkg.name %>-<%= pkg.version %>.js": [
+						"src/js/core.js",
+						"src/angular/core.js"
 					]
 				}
 			}
@@ -77,7 +97,8 @@ module.exports = function( grunt ) {
 				options: {
 					urls: [
 						"http://localhost:8000/test/amd/requireJS.html?version=<%= pkg.version %>",
-						"http://localhost:8000/test/api/index.html?version=<%= pkg.version %>"
+						"http://localhost:8000/test/api/index.html?version=<%= pkg.version %>",
+						"http://localhost:8000/test/angular/index.html?version=<%= pkg.version %>"
 					]
 				}
 			}
