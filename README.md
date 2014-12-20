@@ -65,6 +65,7 @@ VERSION HISTORY
 * #7: Remove need for slash before the hashbang on each step
 * #8: Do not restrict constructor to use ID only
 * #12: Split core and navigation module
+* #19: Enable custom support declaration for faulty 3D support
 
 ### 0.5.3 ([browse](http://github.com/bartaz/impress.js/tree/0.5.3), [zip](http://github.com/bartaz/impress.js/zipball/0.5.3), [tar](http://github.com/bartaz/impress.js/tarball/0.5.3))
 
