@@ -131,30 +131,6 @@ var computeWindowScale = function( config ) {
 	return scale;
 };
 
-// CHECK SUPPORT
-
-var body = document.body;
-var ua = navigator.userAgent.toLowerCase();
-var impressSupported =
-	// Browser should support CSS 3D transforms.
-	( prefixed( "perspective" ) !== null ) &&
-
-	// Should also support `classList` and `dataset` APIs
-	( body.classList ) &&
-	( body.dataset ) &&
-
-	// Some mobile devices need to be blacklisted, because their CSS 3D support or hardware is not
-	// good enough to run impress.js properly, sorry...
-	( ua.search( /(iphone)|(ipod)|(android)/ ) === -1 );
-
-if ( !impressSupported ) {
-	// We can't be sure that `classList` is supported.
-	body.className += " impress-not-supported ";
-} else {
-	body.classList.remove( "impress-not-supported" );
-	body.classList.add( "impress-supported" );
-}
-
 // GLOBALS AND DEFAULTS
 
 // This is where the root elements of all impress.js instances will be kept.
@@ -187,12 +163,34 @@ var empty = function() {};
 var impress = function( argument ) {
 	var rootId;
 
-	// If impress.js is not supported by the browser, return a dummy API.
+	//CHECK SUPPORT
+
+	var body = document.body;
+	var ua = navigator.userAgent.toLowerCase();
+	var support = {
+		basic: function() {
+			// Browser should support CSS 3D transforms.
+			return prefixed( "perspective" ) &&
+				// Should also support `classList` and `dataset` APIs
+				body.classList && body.dataset;
+		},
+		stable3D: function() {
+			// Some mobile devices need to be blacklisted, because their CSS 3D support or hardware
+			// is not good enough to run impress.js properly, sorry...
+			return ua.search( /(iphone)|(ipod)|(android)/ ) === -1;
+		},
+		custom: function() {
+			return true;
+		}
+	};
+
+	// If impress.js basic features are not supported by the browser, return a dummy API.
 	// It may not be a perfect solution but we return early and avoid running code that may use
 	// features not implemented in the browser.
-	if ( !impressSupported ) {
+	if ( !support.basic() ) {
 		return {
 			init: empty,
+			support: empty,
 			goto: empty,
 			prev: empty,
 			next: empty
@@ -298,10 +296,24 @@ var impress = function( argument ) {
 		});
 	};
 
+	var customSupport = function( callback ) {
+		support.custom = callback;
+	};
+
 	// API function that initializes (and run) the presentation.
 	var init = function() {
 		if ( initialized ) {
 			return;
+		}
+
+		var impressSupported = support.basic() && support.stable3D() && support.custom( ua );
+
+		if ( !impressSupported ) {
+			// We can't be sure that `classList` is supported.
+			body.className += " impress-not-supported ";
+		} else {
+			body.classList.remove( "impress-not-supported" );
+			body.classList.add( "impress-supported" );
 		}
 
 		// First we set up the viewport for mobile devices.
@@ -644,12 +656,10 @@ var impress = function( argument ) {
 	// Store and return the API for given impress.js root element.
 	return (roots[ "impress-root-" + rootId ] = {
 		init: init,
+		support: customSupport,
 		goto: goto,
 		next: next,
 		prev: prev
 	});
 
 };
-
-// Flag that can be used in JS to check if browser have passed the support test.
-impress.supported = impressSupported;
